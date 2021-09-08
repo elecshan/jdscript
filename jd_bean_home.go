@@ -207,6 +207,6 @@ func run() {
 	// c.get_award("feeds")
 }
 
-func main() {
-	run()
-}
+// func main() {
+// 	run()
+// }
