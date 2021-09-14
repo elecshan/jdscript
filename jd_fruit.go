@@ -79,8 +79,11 @@ func request(url string, body []byte, headers map[string]string, cookies []*http
 		}
 	}
 
-	res, _ := http.DefaultClient.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	// log.Print("运行request结束！")
+	if err != nil {
+		log.Println("API请求失败，请检查网路重试")
+	}
 	resp <- res
 }
 
@@ -397,21 +400,22 @@ func (c *JdFruit) totalBean(method string) {
 	wg.Done()
 }
 
-func main() {
-	cookies = []*http.Cookie{
-		{
-			Name:  "pt_pin",
-			Value: "xgs951230_m",
-		},
-		{
-			Name:  "pt_key",
-			Value: "AAJhLkGsADDGjNiUL6TgYqbkEvmveWHiFsqkihWTgTH84QAxfjJBXUD3LVrhKb7NHTj8k6ihh0c",
-		},
-	}
-	c := new(JdFruit)
-	go c.totalBean("GET")
-	// fmt.Print(c.farmInfo)
-	go c.jdFruit()
-	wg.Add(2)
-	wg.Wait()
-}
+// func main() {
+// 	cookies = []*http.Cookie{
+// 		{
+// 			Name:  "pt_pin",
+// 			Value: "xgs951230_m",
+// 		},
+// 		{
+// 			Name:  "pt_key",
+// 			Value: "AAJhLkGsADDGjNiUL6TgYqbkEvmveWHiFsqkihWTgTH84QAxfjJBXUD3LVrhKb7NHTj8k6ihh0c",
+// 		},
+// 	}
+// 	c := new(JdFruit)
+// 	go c.totalBean("GET")
+// 	// fmt.Print(c.farmInfo)
+// 	go c.jdFruit()
+// 	wg.Add(2)
+// 	wg.Wait()
+// 	fmt.Print(time.Now().Unix() * 1000)
+// }
